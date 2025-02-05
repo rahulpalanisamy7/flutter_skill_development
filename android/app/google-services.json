@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "382322792919",
+    "project_id": "skill-development-dc1bb",
+    "storage_bucket": "skill-development-dc1bb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:382322792919:android:add83def59c5fec7cb9392",
+        "android_client_info": {
+          "package_name": "com.example.flutter_skill_development"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIPR_e-Naz5loDr7UThRMr5-sGhan4ywo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
