@@ -12,8 +12,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: HomeScreen(title: 'Home'),
+       debugShowCheckedModeBanner: false,
+      home: HomeScreen(title: 'Sign Language Converter'),
     );
   }
 }
