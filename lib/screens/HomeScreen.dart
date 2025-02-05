@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
 
@@ -17,10 +17,48 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        centerTitle: true,
+        backgroundColor: Colors.green,
+        leading: IconButton(
+          icon: Icon(Icons.menu),
+          onPressed: (){
+
+           ScaffoldMessenger.of(context).showSnackBar(
+             SnackBar(
+                 content: Text("Menu Works")
+             )
+           );
+
+          },
+        ),
       ),
       body: Center(
-        child: Text(widget.title),
-      ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Container(
+              width: 100,
+              height: 100,
+              color: Colors.amber,
+            ),
+            Container(
+              width: 100,
+              height: 100,
+              color: Colors.pink,
+            ),
+            Container(
+              width: 100,
+              height: 100,
+              color: Colors.blueGrey,
+            )
+          ],
+        ),
+
+
+
+
+        ),
+      
     );
   }
 }
