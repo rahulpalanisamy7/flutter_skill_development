@@ -2,9 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../models/Topic.dart';
+import 'TopicDetailScreen.dart';
 
 class TopicScreen extends StatefulWidget {
-  const TopicScreen({super.key});
+
+  final String title;
+
+  const TopicScreen({super.key, required this.title});
 
   @override
   State<TopicScreen> createState() => _TopicScreenState();
@@ -17,7 +21,7 @@ class _TopicScreenState extends State<TopicScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Firestore ListView')),
+      appBar: AppBar(title: Text(widget.title)),
       body: StreamBuilder<QuerySnapshot>(
         stream: _usersCollection.snapshots(),
         builder: (context, snapshot) {
@@ -43,12 +47,12 @@ class _TopicScreenState extends State<TopicScreen> {
                 title: Text(row.name), // Use the name from the Topic model
                 onTap: () {
                   // Pass the Topic model instance to the TopicDetailScreen
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => TopicDetailScreen(row: row),
-                  //   ),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TopicDetailScreen(topic: row),
+                    ),
+                  );
                 },
               );
             },
