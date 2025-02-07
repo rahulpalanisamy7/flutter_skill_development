@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_skill_development/screens/HomeScreen.dart';
+import 'package:flutter_skill_development/screens/SplashScreen.dart';
 import 'package:flutter_skill_development/screens/TopicScreen.dart';
 
 void main() async
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
        debugShowCheckedModeBanner: false,
       // home: HomeScreen(title: 'Sign Language Converter'),
-      home: TopicScreen(),
+      home: SplashScreen(),
     );
   }
 }
