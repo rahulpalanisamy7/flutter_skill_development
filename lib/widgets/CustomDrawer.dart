@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_skill_development/screens/SettingScreen.dart';
+import 'package:flutter_skill_development/screens/SupportUsScreen.dart';
 
 class CustomDrawer extends StatelessWidget {
   @override
@@ -52,6 +53,19 @@ class CustomDrawer extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => SettingScreen(title: 'Settings'),
+                ),
+              );
+            },
+          ),
+          _buildDrawerItem(
+            icon: Icons.settings,
+            text: "Support Us",
+            onTap: () {
+              Navigator.pop(context); // Close drawer before navigation
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SupportUsScreen(title: 'Support Us'),
                 ),
               );
             },
