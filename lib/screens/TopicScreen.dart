@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../models/Topic.dart';
-import 'TopicDetailScreen.dart';
+import 'ExamScreen.dart';
 
 class TopicScreen extends StatefulWidget {
 
@@ -16,14 +16,14 @@ class TopicScreen extends StatefulWidget {
 
 class _TopicScreenState extends State<TopicScreen> {
 
-  final CollectionReference _usersCollection = FirebaseFirestore.instance.collection('topic');
+  final CollectionReference _topicCollection = FirebaseFirestore.instance.collection('topic');
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(widget.title)),
       body: StreamBuilder<QuerySnapshot>(
-        stream: _usersCollection.snapshots(),
+        stream: _topicCollection.snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
@@ -36,12 +36,12 @@ class _TopicScreenState extends State<TopicScreen> {
           final List<DocumentSnapshot> documents = snapshot.data?.docs ?? [];
 
           // Convert documents to Topic model instances
-          final List<Topic> countries = documents.map((doc) => Topic.fromDocumentSnapshot(doc)).toList();
+          final List<Topic> topics = documents.map((doc) => Topic.fromDocumentSnapshot(doc)).toList();
 
           return ListView.builder(
-            itemCount: countries.length,
+            itemCount: topics.length,
             itemBuilder: (context, index) {
-              final Topic row = countries[index];
+              final Topic row = topics[index];
 
               return ListTile(
                 title: Text(row.name), // Use the name from the Topic model
@@ -50,7 +50,7 @@ class _TopicScreenState extends State<TopicScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => TopicDetailScreen(topic: row),
+                      builder: (context) => ExamScreen(topic: row),
                     ),
                   );
                 },
