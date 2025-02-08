@@ -1,0 +1,13 @@
+
+Start Collection -> Add Document ->
+
+Document ID -> Auto-ID
+
+field       type        value
+name        string      abcd
+topic_id    reference   topic/document_id
+
+
+nOLc5sy0WblhpueaMovh
+
+
