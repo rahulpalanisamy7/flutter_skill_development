@@ -1,4 +1,5 @@
  import 'package:flutter/material.dart';
+import 'package:flutter_skill_development/widgets/CustomDrawer.dart';
 
 class HomeScreen extends StatefulWidget {
 
@@ -15,6 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: CustomDrawer(),
       appBar: AppBar(
         title: Text(widget.title),
         centerTitle: true,

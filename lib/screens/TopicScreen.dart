@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../models/Topic.dart';
+import '../widgets/CustomDrawer.dart';
 import 'ExamScreen.dart';
 
 class TopicScreen extends StatefulWidget {
@@ -21,6 +22,7 @@ class _TopicScreenState extends State<TopicScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: CustomDrawer(),
       appBar: AppBar(title: Text(widget.title)),
       body: StreamBuilder<QuerySnapshot>(
         stream: _topicCollection.snapshots(),

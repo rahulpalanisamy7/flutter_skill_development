@@ -26,4 +26,12 @@ class UiProvider extends ChangeNotifier{
     _isDark = storage.getBool("isDark")??false;
     notifyListeners();
   }
+
+  //Init method of provider
+  init()async{
+    //After we re run the app
+    storage = await SharedPreferences.getInstance();
+    _isDark = storage.getBool("isDark")??false;
+    notifyListeners();
+  }
 }

@@ -3,6 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_skill_development/screens/HomeScreen.dart';
 import 'package:flutter_skill_development/screens/SplashScreen.dart';
 import 'package:flutter_skill_development/screens/TopicScreen.dart';
+import 'package:flutter_skill_development/services/UiProvider.dart';
+import 'package:provider/provider.dart';
 
 void main() async
 {
@@ -14,12 +16,36 @@ void main() async
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-       debugShowCheckedModeBanner: false,
-      // home: HomeScreen(title: 'Sign Language Converter'),
-      home: SplashScreen(),
+    return ChangeNotifierProvider(
+      create: (BuildContext context)=>UiProvider()..init(),
+      child: Consumer<UiProvider>(
+        builder: (context, UiProvider notifier, child) {
+          return MaterialApp(
+
+            debugShowCheckedModeBanner: false,
+
+            title: 'Dark Theme',
+            //By default theme setting, you can also set system
+            // when your mobile theme is dark the app also become dark
+
+            themeMode: notifier.isDark ? ThemeMode.dark : ThemeMode.light,
+
+            //Our custom theme applied
+            darkTheme: notifier.isDark ? notifier.darkTheme : notifier.lightTheme,
+
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+              useMaterial3: true,
+            ),
+
+            home: SplashScreen(),
+
+          );
+        },
+      ),
     );
   }
 }
