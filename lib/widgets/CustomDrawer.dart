@@ -58,7 +58,7 @@ class CustomDrawer extends StatelessWidget {
             },
           ),
           _buildDrawerItem(
-            icon: Icons.settings,
+            icon: Icons.support,
             text: "Support Us",
             onTap: () {
               Navigator.pop(context); // Close drawer before navigation
