@@ -4,6 +4,8 @@ import 'package:flutter_skill_development/screens/SupportUsScreen.dart';
 import 'package:flutter_skill_development/screens/auth/ProfileScreen.dart';
 import 'package:flutter_skill_development/screens/auth/WelcomeBackScreen.dart';
 
+import '../screens/AboutAppScreen.dart';
+
 class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -33,10 +35,79 @@ class CustomDrawer extends StatelessWidget {
             ),
           ),
           _buildDrawerItem(
-            icon: Icons.home,
-            text: "Home",
+            icon: Icons.dashboard,
+            text: "Topics",
             onTap: () {
               Navigator.pop(context); // Close drawer
+            },
+          ),
+          _buildDrawerItem(
+            icon: Icons.dashboard,
+            text: "Syllabus",
+            onTap: () {
+              Navigator.pop(context); // Close drawer
+            },
+          ),
+          _buildDrawerItem(
+            icon: Icons.dashboard,
+            text: "Material",
+            onTap: () {
+              Navigator.pop(context); // Close drawer
+            },
+          ),
+          _buildDrawerItem(
+            icon: Icons.dashboard,
+            text: "Question Bank",
+            onTap: () {
+              Navigator.pop(context); // Close drawer
+            },
+          ),
+          _buildDrawerItem(
+            icon: Icons.dashboard,
+            text: "Feedback",
+            onTap: () {
+              Navigator.pop(context); // Close drawer
+            },
+          ),
+          _buildDrawerItem(
+            icon: Icons.dashboard,
+            text: "Trainer List",
+            onTap: () {
+              Navigator.pop(context); // Close drawer
+            },
+          ),
+          _buildDrawerItem(
+            icon: Icons.dashboard,
+            text: "Mock Exam",
+            onTap: () {
+              Navigator.pop(context); // Close drawer
+            },
+          ),
+          _buildDrawerItem(
+            icon: Icons.dashboard,
+            text: "Previous Question Paper",
+            onTap: () {
+              Navigator.pop(context); // Close drawer
+            },
+          ),
+          _buildDrawerItem(
+            icon: Icons.dashboard,
+            text: "Complaint",
+            onTap: () {
+              Navigator.pop(context); // Close drawer
+            },
+          ),
+          _buildDrawerItem(
+            icon: Icons.info,
+            text: "About App",
+            onTap: () {
+              Navigator.pop(context); // Close drawer
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AboutAppScreen(title: 'About App'),
+                ),
+              );
             },
           ),
           _buildDrawerItem(
