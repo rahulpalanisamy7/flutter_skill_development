@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_skill_development/screens/auth/RegisterScreen.dart';
 
-import 'loginScreen.dart';
+import 'LoginScreen.dart';
+
 
 class WelcomeBackScreen extends StatelessWidget {
   const WelcomeBackScreen({Key? key}) : super(key: key);
@@ -22,10 +23,10 @@ class WelcomeBackScreen extends StatelessWidget {
         ),
         child: Column(
             children: [
-              const Padding(
-                padding: EdgeInsets.only(top: 200.0),
-                child: Image(image: AssetImage('assets/logo.png')),
-              ),
+              // const Padding(
+              //   padding: EdgeInsets.only(top: 200.0),
+              //   child: Image(image: AssetImage('assets/logo.png')),
+              // ),
               const SizedBox(
                 height: 100,
               ),
@@ -37,7 +38,7 @@ class WelcomeBackScreen extends StatelessWidget {
               GestureDetector(
                 onTap: (){
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const loginScreen()));
+                      MaterialPageRoute(builder: (context) => LoginScreen()));
                 },
                 child: Container(
                   height: 53,
@@ -80,7 +81,7 @@ class WelcomeBackScreen extends StatelessWidget {
                   color: Colors.white
               ),),//
               const SizedBox(height: 12,),
-              const Image(image: AssetImage('assets/social.png'))
+              // const Image(image: AssetImage('assets/social.png'))
             ]
         ),
       ),
