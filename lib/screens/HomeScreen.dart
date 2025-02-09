@@ -2,6 +2,7 @@
 import 'package:flutter_skill_development/widgets/CustomDrawer.dart';
 
 import 'DashboardScreen.dart';
+import 'JobAlertScreen.dart';
 import 'TopicScreen.dart';
 import 'auth/ProfileScreen.dart';
 
@@ -17,14 +18,20 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
-  int _currentIndex = 0;
+  int _selectedIndex  = 0;
 
   final List<Widget> _tabs = [
     DashboardScreen(title: "Dashboard"),
     ProfileScreen(title: 'Profile',),
     TopicScreen(title: 'Explorer'),
-    // JobAlertScreen(title: "job_alert"),
+    JobAlertScreen(title: "Job Alert"),
   ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   void initState() {
@@ -44,18 +51,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           ),
         ],
       ),
-      body: _tabs[_currentIndex],
+      body: _tabs[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        // backgroundColor: Colors.orange,
-        // currentIndex: _currentIndex,
-        // selectedItemColor: Colors.blue,
-        // unselectedItemColor: Theme.of(context).unselectedWidgetColor,
-        showUnselectedLabels: true,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        type: BottomNavigationBarType.fixed, // Ensures all labels are visible
+        // selectedItemColor: Colors.blue, // Highlight selected item
+        // unselectedItemColor: Colors.grey,
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard),
