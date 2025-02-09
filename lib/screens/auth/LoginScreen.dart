@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_skill_development/screens/HomeScreen.dart';
 import 'package:flutter_skill_development/screens/TopicScreen.dart';
 
 class loginScreen extends StatelessWidget {
@@ -77,7 +78,7 @@ class loginScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => TopicScreen(title: "Topic",),
+                          builder: (context) => HomeScreen(title: "Home",),
                         ),
                       );
                     },
