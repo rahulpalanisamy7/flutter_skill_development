@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_skill_development/screens/TopicScreen.dart';
+import 'package:flutter_skill_development/screens/auth/WelcomeBackScreen.dart';
 import 'dart:async';
 
 import 'HomeScreen.dart';
@@ -16,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => TopicScreen(title: 'Topics',)),
+        MaterialPageRoute(builder: (context) => WelcomeBackScreen()),
       ); // Navigate to HomeScreen
     });
   }
