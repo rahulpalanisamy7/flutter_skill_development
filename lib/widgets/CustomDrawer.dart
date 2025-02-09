@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_skill_development/screens/SettingScreen.dart';
 import 'package:flutter_skill_development/screens/SupportUsScreen.dart';
+import 'package:flutter_skill_development/screens/auth/ProfileScreen.dart';
+import 'package:flutter_skill_development/screens/auth/WelcomeBackScreen.dart';
 
 class CustomDrawer extends StatelessWidget {
   @override
@@ -42,6 +44,12 @@ class CustomDrawer extends StatelessWidget {
             text: "Profile",
             onTap: () {
               Navigator.pop(context); // Close drawer
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProfileScreen(title: 'Profile'),
+                ),
+              );
             },
           ),
           _buildDrawerItem(
@@ -80,6 +88,12 @@ class CustomDrawer extends StatelessWidget {
                 SnackBar(content: Text("Logged out")),
               );
               // Implement actual logout logic here
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => WelcomeBackScreen(),
+                ),
+              );
             },
           ),
         ],
