@@ -1,6 +1,10 @@
  import 'package:flutter/material.dart';
 import 'package:flutter_skill_development/widgets/CustomDrawer.dart';
 
+import 'DashboardScreen.dart';
+import 'TopicScreen.dart';
+import 'auth/ProfileScreen.dart';
+
 class HomeScreen extends StatefulWidget {
 
   final String title;
@@ -11,7 +15,21 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+
+  int _currentIndex = 0;
+
+  final List<Widget> _tabs = [
+    DashboardScreen(title: "Dashboard"),
+    ProfileScreen(title: 'Profile',),
+    TopicScreen(title: 'Explorer'),
+    // JobAlertScreen(title: "job_alert"),
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,48 +37,44 @@ class _HomeScreenState extends State<HomeScreen> {
       drawer: CustomDrawer(),
       appBar: AppBar(
         title: Text(widget.title),
-        centerTitle: true,
-        backgroundColor: Colors.green,
-        leading: IconButton(
-          icon: Icon(Icons.menu),
-          onPressed: (){
-
-           ScaffoldMessenger.of(context).showSnackBar(
-             SnackBar(
-                 content: Text("Menu Works")
-             )
-           );
-
-          },
-        ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.notifications),
+            onPressed: () {},
+          ),
+        ],
       ),
-      body: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Container(
-              width: 100,
-              height: 100,
-              color: Colors.amber,
-            ),
-            Container(
-              width: 100,
-              height: 100,
-              color: Colors.pink,
-            ),
-            Container(
-              width: 100,
-              height: 100,
-              color: Colors.blueGrey,
-            )
-          ],
-        ),
-
-
-
-
-        ),
-      
+      body: _tabs[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        // backgroundColor: Colors.orange,
+        // currentIndex: _currentIndex,
+        // selectedItemColor: Colors.blue,
+        // unselectedItemColor: Theme.of(context).unselectedWidgetColor,
+        showUnselectedLabels: true,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.dashboard),
+            label: 'Dashboard',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.explore),
+            label: 'Explorer',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.notifications),
+            label: 'Job Alert',
+          ),
+        ],
+      ),
     );
   }
 }
