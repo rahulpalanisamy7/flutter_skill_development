@@ -28,7 +28,7 @@ class SupportUsScreen extends StatelessWidget {
 
   // Function to launch Instagram
   Future<void> _launchInstagram() async {
-    const instagramUrl = 'https://www.instagram.com/';
+    const instagramUrl = 'https://www.instagram.com/im_ragul7/#';
     if (await launcher.canLaunch(instagramUrl)) {
       await launcher.launch(instagramUrl);
     } else {
