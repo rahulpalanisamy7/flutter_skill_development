@@ -13,9 +13,7 @@ class _JobAlertScreenState extends State<JobAlertScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      // +
       body: Center(
         child: Text('Job Alert Screen'),
       ),

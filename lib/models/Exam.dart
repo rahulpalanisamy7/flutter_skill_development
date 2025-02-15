@@ -2,22 +2,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Exam {
 
-  String documentId;
+  int id;
   String name;
-  final DocumentReference topicRef;
+  final int topic_id;
 
   Exam({
-    required this.documentId,
+    required this.id,
     required this.name,
-    required this.topicRef
+    required this.topic_id
   });
 
-  factory Exam.fromDocumentSnapshot(DocumentSnapshot doc) {
-    final data = doc.data() as Map<String, dynamic>;
+  factory Exam.fromMap(Map<String, dynamic> map) {
     return Exam(
-      documentId: doc.id,
-      name: data['name'] ?? '',
-      topicRef: data['topic_id'], // Firestore reference to the topic
+      id: map['id'],
+      name: map['name'] as String,
+      topic_id: map['topic_id'],
     );
   }
 }

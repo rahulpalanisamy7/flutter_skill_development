@@ -1,7 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_skill_development/models/Topic.dart';
-import 'package:flutter_skill_development/models/Exam.dart';
+import 'package:flutter_skill_development/screens/ExamDetailScreen.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import '../models/Topic.dart';
+import '../models/Exam.dart';
 
 class ExamScreen extends StatefulWidget {
   final Topic topic;
@@ -13,41 +14,71 @@ class ExamScreen extends StatefulWidget {
 }
 
 class _ExamScreenState extends State<ExamScreen> {
+  final SupabaseClient _supabase = Supabase.instance.client;
+
+  List<Exam> _exams = []; // Local list of exams for real-time updates
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Listen for real-time updates from the 'exams' table
+    _supabase
+        .from('exams')
+        .stream(primaryKey: ['id']) // Specify the primary key
+        .eq('topic_id', widget.topic.id) // Filter by topic_id
+        .execute()
+        .listen((data) {
+      setState(() {
+        _exams = data.map((e) => Exam.fromMap(e)).toList();
+      });
+    });
+
+    // Initial fetch of exams
+    _fetchInitialExams();
+  }
+
+  Future<void> _fetchInitialExams() async {
+    final response = await _supabase
+        .from('exams')
+        .select()
+        .eq('topic_id', widget.topic.id) // Filter by topic_id
+        .execute();
+
+    // if (response.error != null) {
+    //   // Handle error if needed
+    //   print('Error fetching exams: ${response.error?.message}');
+    //   return;
+    // }
+
+    setState(() {
+      _exams = (response.data as List<dynamic>)
+          .map((e) => Exam.fromMap(e as Map<String, dynamic>))
+          .toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(widget.topic.name)),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance
-            .collection('exam')
-            .where('topic_id', isEqualTo: FirebaseFirestore.instance.doc('topic/${widget.topic.documentId}')) // Filtering by reference
-            .snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          }
+      body: _exams.isEmpty
+          ? const Center(child: CircularProgressIndicator()) // Show loader while data is fetched
+          : ListView.builder(
+        itemCount: _exams.length,
+        itemBuilder: (context, index) {
+          final Exam exam = _exams[index];
 
-          if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          }
-
-          final List<DocumentSnapshot> documents = snapshot.data?.docs ?? [];
-
-          if (documents.isEmpty) {
-            return Center(child: Text("No exams available for this topic"));
-          }
-
-          final List<Exam> exams = documents.map((doc) => Exam.fromDocumentSnapshot(doc)).toList();
-
-          return ListView.builder(
-            itemCount: exams.length,
-            itemBuilder: (context, index) {
-              final Exam row = exams[index];
-
-              return ListTile(
-                title: Text(row.name),
+          return ListTile(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ExamDetailScreen(exam: exam),
+                ),
               );
             },
+            title: Text(exam.name),
           );
         },
       ),

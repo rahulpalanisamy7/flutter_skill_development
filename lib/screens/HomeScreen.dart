@@ -1,4 +1,4 @@
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_skill_development/widgets/CustomDrawer.dart';
 
 import 'DashboardScreen.dart';
@@ -7,7 +7,6 @@ import 'TopicScreen.dart';
 import 'auth/ProfileScreen.dart';
 
 class HomeScreen extends StatefulWidget {
-
   final String title;
 
   const HomeScreen({super.key, required this.title});
@@ -17,14 +16,21 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+  int _selectedIndex = 0;
 
-  int _selectedIndex  = 0;
-
+  // Tabs and corresponding titles
   final List<Widget> _tabs = [
     DashboardScreen(title: "Dashboard"),
-    ProfileScreen(title: 'Profile',),
+    ProfileScreen(title: 'Profile'),
     TopicScreen(title: 'Explorer'),
     JobAlertScreen(title: "Job Alert"),
+  ];
+
+  final List<String> _tabTitles = [
+    "Dashboard",
+    "Profile",
+    "Explorer",
+    "Job Alert",
   ];
 
   void _onItemTapped(int index) {
@@ -34,16 +40,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: CustomDrawer(),
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(_tabTitles[_selectedIndex]), // Update AppBar title
         actions: [
           IconButton(
             icon: Icon(Icons.notifications),
@@ -56,8 +57,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         type: BottomNavigationBarType.fixed, // Ensures all labels are visible
-        // selectedItemColor: Colors.blue, // Highlight selected item
-        // unselectedItemColor: Colors.grey,
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard),

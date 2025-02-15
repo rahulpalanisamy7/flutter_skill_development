@@ -5,6 +5,7 @@ import 'package:flutter_skill_development/screens/auth/ProfileScreen.dart';
 import 'package:flutter_skill_development/screens/auth/WelcomeBackScreen.dart';
 
 import '../screens/AboutAppScreen.dart';
+import '../screens/TopicScreen.dart';
 
 class CustomDrawer extends StatelessWidget {
   @override
@@ -35,68 +36,74 @@ class CustomDrawer extends StatelessWidget {
             ),
           ),
           _buildDrawerItem(
-            icon: Icons.dashboard,
+            icon: Icons.category,
             text: "Topics",
             onTap: () {
               Navigator.pop(context); // Close drawer
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => TopicScreen(title: 'Topics'),
+                ),
+              );
             },
           ),
-          _buildDrawerItem(
-            icon: Icons.dashboard,
-            text: "Syllabus",
-            onTap: () {
-              Navigator.pop(context); // Close drawer
-            },
-          ),
-          _buildDrawerItem(
-            icon: Icons.dashboard,
-            text: "Material",
-            onTap: () {
-              Navigator.pop(context); // Close drawer
-            },
-          ),
-          _buildDrawerItem(
-            icon: Icons.dashboard,
-            text: "Question Bank",
-            onTap: () {
-              Navigator.pop(context); // Close drawer
-            },
-          ),
-          _buildDrawerItem(
-            icon: Icons.dashboard,
-            text: "Feedback",
-            onTap: () {
-              Navigator.pop(context); // Close drawer
-            },
-          ),
-          _buildDrawerItem(
-            icon: Icons.dashboard,
-            text: "Trainer List",
-            onTap: () {
-              Navigator.pop(context); // Close drawer
-            },
-          ),
-          _buildDrawerItem(
-            icon: Icons.dashboard,
-            text: "Mock Exam",
-            onTap: () {
-              Navigator.pop(context); // Close drawer
-            },
-          ),
-          _buildDrawerItem(
-            icon: Icons.dashboard,
-            text: "Previous Question Paper",
-            onTap: () {
-              Navigator.pop(context); // Close drawer
-            },
-          ),
-          _buildDrawerItem(
-            icon: Icons.dashboard,
-            text: "Complaint",
-            onTap: () {
-              Navigator.pop(context); // Close drawer
-            },
-          ),
+          // _buildDrawerItem(
+          //   icon: Icons.dashboard,
+          //   text: "Syllabus",
+          //   onTap: () {
+          //     Navigator.pop(context); // Close drawer
+          //   },
+          // ),
+          // _buildDrawerItem(
+          //   icon: Icons.dashboard,
+          //   text: "Material",
+          //   onTap: () {
+          //     Navigator.pop(context); // Close drawer
+          //   },
+          // ),
+          // _buildDrawerItem(
+          //   icon: Icons.dashboard,
+          //   text: "Question Bank",
+          //   onTap: () {
+          //     Navigator.pop(context); // Close drawer
+          //   },
+          // ),
+          // _buildDrawerItem(
+          //   icon: Icons.dashboard,
+          //   text: "Feedback",
+          //   onTap: () {
+          //     Navigator.pop(context); // Close drawer
+          //   },
+          // ),
+          // _buildDrawerItem(
+          //   icon: Icons.dashboard,
+          //   text: "Trainer List",
+          //   onTap: () {
+          //     Navigator.pop(context); // Close drawer
+          //   },
+          // ),
+          // _buildDrawerItem(
+          //   icon: Icons.dashboard,
+          //   text: "Mock Exam",
+          //   onTap: () {
+          //     Navigator.pop(context); // Close drawer
+          //   },
+          // ),
+          // _buildDrawerItem(
+          //   icon: Icons.dashboard,
+          //   text: "Previous Question Paper",
+          //   onTap: () {
+          //     Navigator.pop(context); // Close drawer
+          //   },
+          // ),
+          // _buildDrawerItem(
+          //   icon: Icons.dashboard,
+          //   text: "Complaint",
+          //   onTap: () {
+          //     Navigator.pop(context); // Close drawer
+          //   },
+          // ),
           _buildDrawerItem(
             icon: Icons.info,
             text: "About App",

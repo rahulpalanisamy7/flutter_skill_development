@@ -1,12 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../models/Topic.dart';
 import '../widgets/CustomDrawer.dart';
 import 'ExamScreen.dart';
 
 class TopicScreen extends StatefulWidget {
-
   final String title;
 
   const TopicScreen({super.key, required this.title});
@@ -16,46 +15,65 @@ class TopicScreen extends StatefulWidget {
 }
 
 class _TopicScreenState extends State<TopicScreen> {
+  final SupabaseClient _supabase = Supabase.instance.client;
 
-  final CollectionReference _topicCollection = FirebaseFirestore.instance.collection('topic');
+  List<Topic> _topics = []; // Local list of topics
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Listen for real-time updates from the 'topic' table
+    _supabase
+        .from('topics')
+        .stream(primaryKey: ['id']) // Specify the primary key
+        .execute()
+        .listen((data) {
+      setState(() {
+        _topics = data.map((e) => Topic.fromMap(e)).toList();
+      });
+    });
+
+
+    // Initial fetch of topics
+    _fetchInitialTopics();
+  }
+
+  Future<void> _fetchInitialTopics() async {
+    final response = await _supabase.from('topics').select().execute();
+
+    // if (response.error != null) {
+    //   // Handle error if needed
+    //   print('Error fetching topics: ${response.error?.message}');
+    //   return;
+    // }
+
+    setState(() {
+      _topics = (response.data as List<dynamic>)
+          .map((e) => Topic.fromMap(e as Map<String, dynamic>))
+          .toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: CustomDrawer(),
-      appBar: AppBar(title: Text(widget.title)),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: _topicCollection.snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          }
+      body: _topics.isEmpty
+          ? const Center(child: CircularProgressIndicator())
+          : ListView.builder(
+        itemCount: _topics.length,
+        itemBuilder: (context, index) {
+          final topic = _topics[index];
 
-          if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          }
-
-          final List<DocumentSnapshot> documents = snapshot.data?.docs ?? [];
-
-          // Convert documents to Topic model instances
-          final List<Topic> topics = documents.map((doc) => Topic.fromDocumentSnapshot(doc)).toList();
-
-          return ListView.builder(
-            itemCount: topics.length,
-            itemBuilder: (context, index) {
-              final Topic row = topics[index];
-
-              return ListTile(
-                title: Text(row.name), // Use the name from the Topic model
-                onTap: () {
-                  // Pass the Topic model instance to the TopicDetailScreen
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ExamScreen(topic: row),
-                    ),
-                  );
-                },
+          return ListTile(
+            title: Text(topic.name),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ExamScreen(topic: topic),
+                ),
               );
             },
           );
