@@ -4,11 +4,13 @@ class ExamMaterial {
 
   int id;
   String url;
+  String name;
   final int exam_id;
 
   ExamMaterial({
     required this.id,
     required this.url,
+    required this.name,
     required this.exam_id
   });
 
@@ -16,6 +18,7 @@ class ExamMaterial {
     return ExamMaterial(
       id: map['id'],
       url: map['url'] as String,
+      name: map['name'] as String,
       exam_id: map['exam_id'],
     );
   }

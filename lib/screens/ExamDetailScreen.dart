@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../models/Exam.dart';
 import '../models/ExamMaterial.dart';
+import 'PDFViewerScreen.dart';
 
 class ExamDetailScreen extends StatefulWidget {
   final Exam exam;
@@ -32,7 +32,6 @@ class _ExamDetailScreenState extends State<ExamDetailScreen> {
         .execute();
 
     // if (response.error != null) {
-    //   // Handle error
     //   print('Error fetching materials: ${response.error?.message}');
     //   return;
     // }
@@ -70,12 +69,22 @@ class _ExamDetailScreenState extends State<ExamDetailScreen> {
           final ExamMaterial material = _materials[index];
 
           return ListTile(
-            title: Text('Material ${material.id}'),
-            subtitle: Text(material.url),
-            trailing: IconButton(
-              icon: const Icon(Icons.download),
-              onPressed: () => _downloadPdf(material.url), // Download the PDF
-            ),
+            // title: Text('Material ${material.id}'),
+            title: Text(material.name),
+            // subtitle: Text(material.url),
+            trailing: const Icon(Icons.picture_as_pdf),
+            onTap: () {
+              // Navigate to the PDF Viewer Screen
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) =>
+              //         PDFViewerScreen(pdfUrl: material.url),
+              //   ),
+              // );
+
+              _downloadPdf(material.url);
+            },
           );
         },
       ),
