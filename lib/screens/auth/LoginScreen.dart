@@ -1,15 +1,66 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_skill_development/screens/HomeScreen.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+final supabase = Supabase.instance.client;
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+
+  final String title;
+
+  const LoginScreen({Key? key, required this.title}) : super(key: key);
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  final TextEditingController emailController = TextEditingController();
+
+  final TextEditingController passwordController = TextEditingController();
+
+  final storage = FlutterSecureStorage(); // Secure storage instance
+
   bool _obscurePassword = true; // Control password visibility
+
+  @override
+  void initState() {
+    super.initState();
+    emailController.text = "admin@gmail.com";
+    passwordController.text = "admin@123";
+  }
+
+  Future<void> signIn() async {
+    try {
+      final response = await supabase.auth.signInWithPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+
+      if (response.session != null) {
+        // Save session data securely
+        await storage.write(key: 'session', value: response.session!.accessToken);
+
+        print(response.session!.accessToken);
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Login successful!')),
+        );
+
+        // Navigate to home screen
+        Navigator.pop(context);
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => HomeScreen(title: 'Home')),
+        );
+      }
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Login failed: $error')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +103,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const TextField(
+                      TextField(
+                        controller: emailController,
                         decoration: InputDecoration(
                           suffixIcon: Icon(Icons.check, color: Colors.grey),
                           labelText: 'Gmail',
@@ -63,6 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       TextField(
+                        controller: passwordController,
                         obscureText: _obscurePassword, // Toggle password visibility
                         decoration: InputDecoration(
                           suffixIcon: IconButton(
@@ -115,14 +168,17 @@ class _LoginScreenState extends State<LoginScreen> {
                               Color(0xff281537),
                             ]),
                           ),
-                          child: const Center(
-                            child: Text(
-                              'SIGN IN',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                  color: Colors.white),
-                            ),
+                          child: Center(
+                            child: InkWell(
+                              onTap: signIn,
+                              child: Text(
+                                'LOGIN',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                    color: Colors.white),
+                              ),
+                            )
                           ),
                         ),
                       ),

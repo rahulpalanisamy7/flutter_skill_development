@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../widgets/CustomDrawer.dart';
+
 class ProfileScreen extends StatefulWidget {
   final String title;
 
@@ -10,6 +12,9 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+
+  final user = supabase.auth.currentUser;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
               ListTile(
                 leading: Icon(Icons.email),
-                title: Text('johndoe@example.com'), // Replace with dynamic user name
+                title: Text(user?.email ?? ''), // Replace with dynamic user name
                 // trailing: Icon(Icons.edit),
                 onTap: () {
                   // Handle the edit profile action

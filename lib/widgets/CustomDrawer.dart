@@ -1,189 +1,107 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_skill_development/screens/SettingScreen.dart';
-import 'package:flutter_skill_development/screens/SupportUsScreen.dart';
-import 'package:flutter_skill_development/screens/auth/ProfileScreen.dart';
-import 'package:flutter_skill_development/screens/auth/WelcomeBackScreen.dart';
 
-import '../screens/AboutAppScreen.dart';
-import '../screens/TopicScreen.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+import '../screens/HomeScreen.dart';
+import '../screens/auth/LoginScreen.dart';
+import '../screens/auth/RegisterScreen.dart';
+
+final supabase = Supabase.instance.client;
+final storage = FlutterSecureStorage();
 
 class CustomDrawer extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          DrawerHeader(
-            decoration: BoxDecoration(color: Colors.blue),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CircleAvatar(
-                  radius: 30,
-                  backgroundImage: AssetImage('assets/user.png'), // Ensure the asset exists
-                ),
-                SizedBox(height: 10),
-                Text(
-                  'John Doe',
-                  style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  'johndoe@example.com',
-                  style: TextStyle(color: Colors.white70, fontSize: 14),
-                ),
-              ],
-            ),
-          ),
-          _buildDrawerItem(
-            icon: Icons.category,
-            text: "Topics",
-            onTap: () {
-              Navigator.pop(context); // Close drawer
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => TopicScreen(title: 'Topics'),
-                ),
-              );
-            },
-          ),
-          // _buildDrawerItem(
-          //   icon: Icons.dashboard,
-          //   text: "Syllabus",
-          //   onTap: () {
-          //     Navigator.pop(context); // Close drawer
-          //   },
-          // ),
-          // _buildDrawerItem(
-          //   icon: Icons.dashboard,
-          //   text: "Material",
-          //   onTap: () {
-          //     Navigator.pop(context); // Close drawer
-          //   },
-          // ),
-          // _buildDrawerItem(
-          //   icon: Icons.dashboard,
-          //   text: "Question Bank",
-          //   onTap: () {
-          //     Navigator.pop(context); // Close drawer
-          //   },
-          // ),
-          // _buildDrawerItem(
-          //   icon: Icons.dashboard,
-          //   text: "Feedback",
-          //   onTap: () {
-          //     Navigator.pop(context); // Close drawer
-          //   },
-          // ),
-          // _buildDrawerItem(
-          //   icon: Icons.dashboard,
-          //   text: "Trainer List",
-          //   onTap: () {
-          //     Navigator.pop(context); // Close drawer
-          //   },
-          // ),
-          // _buildDrawerItem(
-          //   icon: Icons.dashboard,
-          //   text: "Mock Exam",
-          //   onTap: () {
-          //     Navigator.pop(context); // Close drawer
-          //   },
-          // ),
-          // _buildDrawerItem(
-          //   icon: Icons.dashboard,
-          //   text: "Previous Question Paper",
-          //   onTap: () {
-          //     Navigator.pop(context); // Close drawer
-          //   },
-          // ),
-          // _buildDrawerItem(
-          //   icon: Icons.dashboard,
-          //   text: "Complaint",
-          //   onTap: () {
-          //     Navigator.pop(context); // Close drawer
-          //   },
-          // ),
-          _buildDrawerItem(
-            icon: Icons.info,
-            text: "About App",
-            onTap: () {
-              Navigator.pop(context); // Close drawer
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => AboutAppScreen(title: 'About App'),
-                ),
-              );
-            },
-          ),
-          _buildDrawerItem(
-            icon: Icons.person,
-            text: "Profile",
-            onTap: () {
-              Navigator.pop(context); // Close drawer
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ProfileScreen(title: 'Profile'),
-                ),
-              );
-            },
-          ),
-          _buildDrawerItem(
-            icon: Icons.settings,
-            text: "Settings",
-            onTap: () {
-              Navigator.pop(context); // Close drawer before navigation
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => SettingScreen(title: 'Settings'),
-                ),
-              );
-            },
-          ),
-          _buildDrawerItem(
-            icon: Icons.favorite,
-            text: "Support Us",
-            onTap: () {
-              Navigator.pop(context); // Close drawer before navigation
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => SupportUsScreen(title: 'Support Us'),
-                ),
-              );
-            },
-          ),
-          Divider(),
-          _buildDrawerItem(
-            icon: Icons.logout,
-            text: "Logout",
-            onTap: () {
-              Navigator.pop(context); // Close drawer
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text("Logged out")),
-              );
-              // Implement actual logout logic here
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => WelcomeBackScreen(),
-                ),
-              );
-            },
-          ),
-        ],
+  final BuildContext parentContext;
+
+  CustomDrawer({required this.parentContext});
+
+  Future<void> signOut() async {
+    await supabase.auth.signOut();
+    await storage.delete(key: 'session');
+
+    // Navigate to login screen and remove all previous routes
+    Navigator.pushReplacement(
+      parentContext,
+      MaterialPageRoute(
+        // builder: (context) => LoginScreen(title: 'Login'),
+        builder: (context) => HomeScreen(title: 'Home'),
       ),
     );
   }
 
-  Widget _buildDrawerItem({required IconData icon, required String text, required VoidCallback onTap}) {
-    return ListTile(
-      leading: Icon(icon, color: Colors.blue),
-      title: Text(text, style: TextStyle(fontSize: 16)),
-      onTap: onTap, // Fix: Now correctly calling the function
+  @override
+  Widget build(BuildContext context) {
+    final user = supabase.auth.currentUser;
+
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          if (user != null) ...[
+            UserAccountsDrawerHeader(
+              accountName: Text("User Name"),
+              accountEmail: Text(user.email ?? "No Email"),
+              currentAccountPicture: CircleAvatar(
+                child: Icon(Icons.person, size: 40),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.home),
+              title: Text('Home'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushReplacementNamed(context, '/home');
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text('Settings'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/settings');
+              },
+            ),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.exit_to_app, color: Colors.red),
+              title: Text('Logout', style: TextStyle(color: Colors.red)),
+              onTap: signOut,
+            ),
+          ] else ...[
+            UserAccountsDrawerHeader(
+              accountName: Text(user != null ? "User Name" : "Guest"),
+              accountEmail: Text(user?.email ?? "No Email"),
+              currentAccountPicture: CircleAvatar(
+                child: Icon(Icons.person, size: 40),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.login),
+              title: Text('Login'),
+              onTap: () {
+                Navigator.pushReplacement(
+                  parentContext,
+                  MaterialPageRoute(
+                    builder: (context) => LoginScreen(title: 'Login'),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.login),
+              title: Text('Register'),
+              onTap: () {
+                Navigator.pushReplacement(
+                  parentContext,
+                  MaterialPageRoute(
+                    builder: (context) => RegisterScreen(title: 'Register'),
+                  ),
+                );
+              },
+            ),
+          ],
+        ],
+      ),
     );
   }
 }

@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: CustomDrawer(),
+      drawer: CustomDrawer(parentContext: context,),
       appBar: AppBar(
         title: Text(_tabTitles[_selectedIndex]), // Update AppBar title
         actions: [

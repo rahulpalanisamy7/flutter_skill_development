@@ -58,7 +58,7 @@ class _TopicScreenState extends State<TopicScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: CustomDrawer(),
+      drawer: CustomDrawer(parentContext: context,),
       body: _topics.isEmpty
           ? const Center(child: CircularProgressIndicator())
           : ListView.builder(
