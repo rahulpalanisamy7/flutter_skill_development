@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../widgets/CustomDrawer.dart';
+import '../HomeScreen.dart';
 
 class ProfileScreen extends StatefulWidget {
   final String title;
@@ -14,6 +15,20 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
 
   final user = supabase.auth.currentUser;
+
+  Future<void> signOut() async {
+    await supabase.auth.signOut();
+    await storage.delete(key: 'session');
+
+    // Navigate to login screen and remove all previous routes
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        // builder: (context) => LoginScreen(title: 'Login'),
+        builder: (context) => HomeScreen(title: 'Home'),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +45,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Center(
                 child: CircleAvatar(
                   radius: 50,
-                  backgroundImage: NetworkImage('https://example.com/profile-image.jpg'), // Replace with the user's image URL
+                  backgroundImage: NetworkImage('https://gravatar.com/avatar/${user!.email}'), // Replace with the user's image URL
                   backgroundColor: Colors.grey[200],
                 ),
               ),
@@ -39,7 +54,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               // Profile Details List
               ListTile(
                 leading: Icon(Icons.person),
-                title: Text('John Doe'), // Replace with dynamic user name
+                title: Text(user?.userMetadata?['name']), // Replace with dynamic user name
                 trailing: Icon(Icons.edit),
                 onTap: () {
                   // Handle the edit profile action
@@ -49,7 +64,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
               ListTile(
                 leading: Icon(Icons.email),
-                title: Text(user?.email ?? ''), // Replace with dynamic user name
+                title: Text(user!.email ?? ""), // Replace with dynamic user name
                 // trailing: Icon(Icons.edit),
                 onTap: () {
                   // Handle the edit profile action
@@ -59,7 +74,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
               ListTile(
                 leading: Icon(Icons.phone),
-                title: Text('+1234567890'), // Replace with dynamic phone number
+                title: Text(user?.userMetadata?['phone']), // Replace with dynamic phone number
                 onTap: () {
                   // Handle phone number action
                 },
@@ -78,10 +93,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
               // Logout Button (Red color)
               TextButton(
                 onPressed: () {
+
+                  signOut();
+
                   // Handle logout action
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Logged out')),
                   );
+
                 },
                 child: const Text(
                   'Logout',
