@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_skill_development/screens/AboutAppScreen.dart';
+import 'package:flutter_skill_development/screens/FeedbackScreen.dart';
 import 'package:flutter_skill_development/screens/SettingScreen.dart';
 import 'package:flutter_skill_development/screens/SupportUsScreen.dart';
+import 'package:flutter_skill_development/screens/SyllabusScreen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 
 import '../screens/HomeScreen.dart';
+import '../screens/PreviousQuestionScreen.dart';
 import '../screens/auth/LoginScreen.dart';
 import '../screens/auth/ProfileScreen.dart';
 import '../screens/auth/RegisterScreen.dart';
@@ -54,7 +57,51 @@ class CustomDrawer extends StatelessWidget {
               title: Text('Home'),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.pushReplacementNamed(context, '/home');
+                Navigator.push(
+                  parentContext,
+                  MaterialPageRoute(
+                    builder: (context) => HomeScreen(title: 'Home'),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.bookmark),
+              title: Text('Syllabus'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  parentContext,
+                  MaterialPageRoute(
+                    builder: (context) => SyllabusScreen(title: 'Syllabus'),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.bookmark),
+              title: Text('Feedback'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  parentContext,
+                  MaterialPageRoute(
+                    builder: (context) => FeedbackScreen(title: 'Feedback'),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.bookmark),
+              title: Text('Previous Question'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  parentContext,
+                  MaterialPageRoute(
+                    builder: (context) => PreviousQuestionScreen(title: 'Previous Question'),
+                  ),
+                );
               },
             ),
             ListTile(
