@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_skill_development/screens/AboutAppScreen.dart';
+import 'package:flutter_skill_development/screens/SettingScreen.dart';
+import 'package:flutter_skill_development/screens/SupportUsScreen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+
 import '../screens/HomeScreen.dart';
 import '../screens/auth/LoginScreen.dart';
+import '../screens/auth/ProfileScreen.dart';
 import '../screens/auth/RegisterScreen.dart';
 
 final supabase = Supabase.instance.client;
@@ -58,7 +62,38 @@ class CustomDrawer extends StatelessWidget {
               title: Text('Settings'),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.pushNamed(context, '/settings');
+                Navigator.push(
+                  parentContext,
+                  MaterialPageRoute(
+                    builder: (context) => SettingScreen(title: 'Settings'),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.info),
+              title: Text('About App'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  parentContext,
+                  MaterialPageRoute(
+                    builder: (context) => AboutAppScreen(title: 'About'),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.favorite),
+              title: Text('Support Us'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  parentContext,
+                  MaterialPageRoute(
+                    builder: (context) => SupportUsScreen(title: 'Support Us'),
+                  ),
+                );
               },
             ),
             Divider(),
