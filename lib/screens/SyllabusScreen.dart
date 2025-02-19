@@ -60,6 +60,9 @@ class _SyllabusScreenState extends State<SyllabusScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
       drawer: CustomDrawer(parentContext: context,),
       body: _topics.isEmpty
           ? const Center(child: CircularProgressIndicator())
