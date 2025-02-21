@@ -21,7 +21,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         children: [
           TaskCardButton(title: 'TNPSC', progress: 0.6, image_path: "assets/carousel/d1.jpg",),
           TaskCardButton(title: 'UPSC', progress: 0.8, image_path: "assets/carousel/d2.jpg",),
-          TaskCardButton(title: 'CAT', progress: 0.4, image_path: "assets/carousel/d3.jpg",),
+          TaskCardButton(title: 'RRB', progress: 0.4, image_path: "assets/carousel/RRB.jpg",),
           TaskCardButton(title: 'SSC', progress: 0.2, image_path: "assets/carousel/d4.jpg",),
         ],
       ),
