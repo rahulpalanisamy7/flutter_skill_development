@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_skill_development/screens/SyllabusExamScreen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../models/Topic.dart';
+import '../models/Syllabus.dart';
 import '../widgets/CustomDrawer.dart';
 import 'ExamScreen.dart';
 
@@ -19,7 +20,7 @@ class _SyllabusScreenState extends State<SyllabusScreen> {
 
   final SupabaseClient _supabase = Supabase.instance.client;
 
-  List<Topic> _topics = []; // Local list of topics
+  List<Syllabus> _syllabus = []; // Local list of topics
 
   @override
   void initState() {
@@ -27,22 +28,22 @@ class _SyllabusScreenState extends State<SyllabusScreen> {
 
     // Listen for real-time updates from the 'topic' table
     _supabase
-        .from('topics')
+        .from('syllabus')
         .stream(primaryKey: ['id']) // Specify the primary key
         .execute()
         .listen((data) {
       setState(() {
-        _topics = data.map((e) => Topic.fromMap(e)).toList();
+        _syllabus = data.map((e) => Syllabus.fromMap(e)).toList();
       });
     });
 
 
     // Initial fetch of topics
-    _fetchInitialTopics();
+    _fetchInitialSyllabuss();
   }
 
-  Future<void> _fetchInitialTopics() async {
-    final response = await _supabase.from('topics').select().execute();
+  Future<void> _fetchInitialSyllabuss() async {
+    final response = await _supabase.from('syllabus').select().execute();
 
     // if (response.error != null) {
     //   // Handle error if needed
@@ -51,8 +52,8 @@ class _SyllabusScreenState extends State<SyllabusScreen> {
     // }
 
     setState(() {
-      _topics = (response.data as List<dynamic>)
-          .map((e) => Topic.fromMap(e as Map<String, dynamic>))
+      _syllabus = (response.data as List<dynamic>)
+          .map((e) => Syllabus.fromMap(e as Map<String, dynamic>))
           .toList();
     });
   }
@@ -64,20 +65,20 @@ class _SyllabusScreenState extends State<SyllabusScreen> {
         title: Text(widget.title),
       ),
       drawer: CustomDrawer(parentContext: context,),
-      body: _topics.isEmpty
+      body: _syllabus.isEmpty
           ? const Center(child: CircularProgressIndicator())
           : ListView.builder(
-        itemCount: _topics.length,
+        itemCount: _syllabus.length,
         itemBuilder: (context, index) {
-          final topic = _topics[index];
+          final row = _syllabus[index];
 
           return ListTile(
-            title: Text(topic.name),
+            title: Text(row.name),
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ExamScreen(topic: topic),
+                  builder: (context) => SyllabusExamScreen(syllabus: row),
                 ),
               );
             },

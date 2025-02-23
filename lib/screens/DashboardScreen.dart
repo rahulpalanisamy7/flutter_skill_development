@@ -23,6 +23,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
           TaskCardButton(title: 'UPSC', progress: 0.8, image_path: "assets/carousel/d2.jpg",),
           TaskCardButton(title: 'RRB', progress: 0.4, image_path: "assets/carousel/RRB.jpg",),
           TaskCardButton(title: 'SSC', progress: 0.2, image_path: "assets/carousel/d4.jpg",),
+          TaskCardButton(title: 'IBPS', progress: 0.3, image_path: "assets/carousel/IBPS.jpg",),
+          TaskCardButton(title: 'DEFENCE', progress: 0.9, image_path: "assets/carousel/DEFENCE.png",),
         ],
       ),
     );

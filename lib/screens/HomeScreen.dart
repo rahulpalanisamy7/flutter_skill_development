@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_skill_development/widgets/CustomDrawer.dart';
 
 import 'DashboardScreen.dart';
-import 'JobAlertScreen.dart';
+import 'UpdateScreen.dart';
 import 'TopicScreen.dart';
 import 'auth/ProfileScreen.dart';
 
@@ -23,14 +23,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     DashboardScreen(title: "Dashboard"),
     ProfileScreen(title: 'Profile'),
     TopicScreen(title: 'Explorer'),
-    JobAlertScreen(title: "Job Alert"),
+    UpdateScreen(title: "Updates"),
   ];
 
   final List<String> _tabTitles = [
     "Dashboard",
     "Profile",
     "Explorer",
-    "Job Alert",
+    "Updates",
   ];
 
   void _onItemTapped(int index) {
@@ -72,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.notifications),
-            label: 'Job Alert',
+            label: 'Updates',
           ),
         ],
       ),
