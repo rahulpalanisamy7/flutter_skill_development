@@ -73,7 +73,7 @@ class _VideoTutorialScreenState extends State<VideoTutorialScreen> {
       drawer: CustomDrawer(parentContext: context),
       body: _video_tutorials.isEmpty
           // ? const Center(child: CircularProgressIndicator())
-          ? const Text("no video tutorials")
+          ? const Center(child: Text("no video tutorials"),)
           : ListView.builder(
         itemCount: _video_tutorials.length,
         itemBuilder: (context, index) {
