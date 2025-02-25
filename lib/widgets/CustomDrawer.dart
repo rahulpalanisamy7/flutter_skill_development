@@ -5,6 +5,7 @@ import 'package:flutter_skill_development/screens/QuizScreen.dart';
 import 'package:flutter_skill_development/screens/SettingScreen.dart';
 import 'package:flutter_skill_development/screens/SupportUsScreen.dart';
 import 'package:flutter_skill_development/screens/SyllabusScreen.dart';
+import 'package:flutter_skill_development/screens/VideoTutorialScreen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -62,6 +63,19 @@ class CustomDrawer extends StatelessWidget {
                   parentContext,
                   MaterialPageRoute(
                     builder: (context) => HomeScreen(title: 'Home'),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.video_call),
+              title: Text('Video'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  parentContext,
+                  MaterialPageRoute(
+                    builder: (context) => VideoTutorialScreen(title: 'Video Tutorial'),
                   ),
                 );
               },
