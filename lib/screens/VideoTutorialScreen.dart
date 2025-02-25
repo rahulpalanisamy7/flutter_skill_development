@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../models/VideoTutorial.dart';
 import '../widgets/CustomDrawer.dart';
-import 'ExamScreen.dart';
 
 class VideoTutorialScreen extends StatefulWidget {
   final String title;
@@ -23,7 +23,7 @@ class _VideoTutorialScreenState extends State<VideoTutorialScreen> {
   void initState() {
     super.initState();
 
-    // Listen for real-time updates from the 'video_tutorial' table
+    // Listen for real-time updates from the 'video_tutorials' table
     _supabase
         .from('video_tutorials')
         .stream(primaryKey: ['id']) // Specify the primary key
@@ -34,19 +34,12 @@ class _VideoTutorialScreenState extends State<VideoTutorialScreen> {
       });
     });
 
-
-    // Initial fetch of video_tutorials
+    // Initial fetch of video tutorials
     _fetchInitialVideoTutorials();
   }
 
   Future<void> _fetchInitialVideoTutorials() async {
     final response = await _supabase.from('video_tutorials').select().execute();
-
-    // if (response.error != null) {
-    //   // Handle error if needed
-    //   print('Error fetching video_tutorials: ${response.error?.message}');
-    //   return;
-    // }
 
     setState(() {
       _video_tutorials = (response.data as List<dynamic>)
@@ -55,13 +48,22 @@ class _VideoTutorialScreenState extends State<VideoTutorialScreen> {
     });
   }
 
+  void _launchURL(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      drawer: CustomDrawer(parentContext: context,),
+      drawer: CustomDrawer(parentContext: context),
       body: _video_tutorials.isEmpty
           ? const Center(child: CircularProgressIndicator())
           : ListView.builder(
@@ -71,14 +73,7 @@ class _VideoTutorialScreenState extends State<VideoTutorialScreen> {
 
           return ListTile(
             title: Text(video_tutorial.name),
-            onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => ExamScreen(video_tutorial: video_tutorial),
-              //   ),
-              // );
-            },
+            onTap: () => _launchURL(video_tutorial.url), // Open YouTube URL
           );
         },
       ),
