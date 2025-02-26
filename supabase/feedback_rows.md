@@ -1,0 +1,1 @@
+INSERT INTO "public"."feedback" ("id", "created_at", "title", "feedback") VALUES ('7', '2025-02-19 14:36:45.39042+00', 'Feedback', 'good'), ('9', '2025-02-19 14:38:46.996688+00', 'Feedback', 'bad'), ('14', '2025-02-22 16:25:52.46061+00', 'Feedback', 'better ');

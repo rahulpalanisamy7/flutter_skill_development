@@ -1,0 +1,1 @@
+INSERT INTO "public"."video_tutorials" ("id", "created_at", "name", "url", "video_topic_id") VALUES ('1', '2025-02-25 14:21:40.321852+00', 'General Science', 'https://www.youtube.com/watch?v=o8pdZJJrJ58', '4');
