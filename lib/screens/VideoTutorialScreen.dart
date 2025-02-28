@@ -69,7 +69,7 @@ class _VideoTutorialScreenState extends State<VideoTutorialScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.video_topic.name),
-      ),
+      ), 
       drawer: CustomDrawer(parentContext: context),
       body: _video_tutorials.isEmpty
           // ? const Center(child: CircularProgressIndicator())
