@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_skill_development/screens/AboutAppScreen.dart';
 import 'package:flutter_skill_development/screens/FeedbackScreen.dart';
+import 'package:flutter_skill_development/screens/QuestionTopicScreen.dart';
 import 'package:flutter_skill_development/screens/QuizScreen.dart';
 import 'package:flutter_skill_development/screens/SettingScreen.dart';
 import 'package:flutter_skill_development/screens/SupportUsScreen.dart';
@@ -89,7 +90,7 @@ class CustomDrawer extends StatelessWidget {
                 Navigator.push(
                   parentContext,
                   MaterialPageRoute(
-                    builder: (context) => QuizScreen(title: 'Quiz'),
+                    builder: (context) => QuestionTopicScreen(title: 'Quiz'),
                   ),
                 );
               },
