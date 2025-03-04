@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '../models/Topic.dart';
 import 'ResultScreen.dart';
 
 class QuizScreen extends StatefulWidget {
-  final String title;
+  final Topic topic;
 
-  const QuizScreen({super.key, required this.title});
+  const QuizScreen({super.key, required this.topic});
 
   @override
   _QuizScreenState createState() => _QuizScreenState();
@@ -26,7 +27,7 @@ class _QuizScreenState extends State<QuizScreen> {
   /// Fetches quiz questions from Supabase
   Future<void> _fetchQuestions() async {
     try {
-      final response = await Supabase.instance.client.from('questions').select();
+      final response = await Supabase.instance.client.from('questions').select().eq('topic_id', widget.topic.id);
 
       setState(() {
         _questions = response.map<Map<String, dynamic>>((q) => {
@@ -76,13 +77,13 @@ class _QuizScreenState extends State<QuizScreen> {
   Widget build(BuildContext context) {
     if (_isLoading) {
       return Scaffold(
-        appBar: AppBar(title: Text(widget.title)),
+        appBar: AppBar(title: Text(widget.topic.name)),
         body: const Center(child: CircularProgressIndicator()),
       );
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
+      appBar: AppBar(title: Text(widget.topic.name)),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
