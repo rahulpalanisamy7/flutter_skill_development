@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_skill_development/screens/QuestionTopicScreen.dart';
 import 'package:flutter_skill_development/screens/QuizScreen.dart';
 
 class ResultScreen extends StatelessWidget {
@@ -32,7 +33,7 @@ class ResultScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => QuizScreen(title: 'Quiz'),
+                    builder: (context) => QuestionTopicScreen(title: 'Quiz'),
                   ),
                 );
               },
