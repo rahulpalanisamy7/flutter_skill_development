@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_skill_development/widgets/CustomDrawer.dart';
 
 import 'DashboardScreen.dart';
-import 'UpdateScreen.dart';
+import 'NotificationScreen.dart';
 import 'TopicScreen.dart';
 import 'auth/ProfileScreen.dart';
 
@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     DashboardScreen(title: "Dashboard"),
     ProfileScreen(title: 'Profile'),
     TopicScreen(title: 'Explorer'),
-    UpdateScreen(title: "Updates"),
+    NotificationScreen(title: "Notification"),
   ];
 
   final List<String> _tabTitles = [
